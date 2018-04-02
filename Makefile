@@ -11,8 +11,8 @@ EXT =
 CC = gcc
 FLEX = flex
 BISON = bison
-CFLAGS = -Wall -Wno-misleading-indentation -DVERSION=\"v$(VERSION)\" -std=gnu89 -fPIC -ggdb
-CLIBS = -I$(LIB) -lm -lcrypto
+CFLAGS += -Wall -Wno-misleading-indentation -DVERSION=\"v$(VERSION)\" -std=gnu89 -fPIC -ggdb
+CLIBS += -I$(LIB) -lm -lcrypto
 
 $(BIN)/armake: \
         $(patsubst %.c, %.o, $(wildcard $(SRC)/*.c)) \
