@@ -40,6 +40,9 @@
 #include "matrix.h"
 #include "p3d.h"
 
+#if defined(__linux__) && !defined(__GLIBC__)
+#include "sort_r.h"
+#endif
 
 int read_lods(FILE *f_source, struct mlod_lod *mlod_lods, uint32_t num_lods) {
     /*
@@ -878,8 +881,10 @@ void convert_lod(struct mlod_lod *mlod_lod, struct odol_lod *odol_lod,
     if (mlod_lod->num_faces > 1) {
 #ifdef _WIN32
         qsort_s(odol_lod->face_lookup, odol_lod->num_faces, sizeof(uint32_t), compare_face_lookup, (void *)mlod_lod->faces);
-#else
+#elif defined(__GLIBC__)
         qsort_r(odol_lod->face_lookup, odol_lod->num_faces, sizeof(uint32_t), compare_face_lookup, (void *)mlod_lod->faces);
+#else
+	sort_r(odol_lod->face_lookup, odol_lod->num_faces, sizeof(uint32_t), compare_face_lookup, (void *)mlod_lod->faces);
 #endif
     }
 
