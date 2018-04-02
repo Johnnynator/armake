@@ -32,7 +32,7 @@
 #include "keygen.h"
 
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 void RSA_get0_key(const RSA *r,
         const BIGNUM **n, const BIGNUM **e, const BIGNUM **d) {
     if (n != NULL)
